@@ -64,7 +64,6 @@ public class GangAnnotationConfigApplicationContext {
                 }
             });
         }
-        //System.out.println(resource);
     }
 
     public Object getBean(String beanName){

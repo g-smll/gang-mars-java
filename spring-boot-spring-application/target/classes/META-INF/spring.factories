@@ -1,0 +1,9 @@
+# Initializers
+org.springframework.context.ApplicationContextInitializer=\
+com.gang.mars.context.HelloWorldAfterApplicationContextInitializer,\
+com.gang.mars.context.HelloWorldBeforeApplicationContextInitializer
+
+# Application Listeners
+org.springframework.context.ApplicationListener=\
+com.gang.mars.listener.HelloWorldAfterApplicationListener,\
+com.gang.mars.listener.HelloWorldBeforeApplicationListener

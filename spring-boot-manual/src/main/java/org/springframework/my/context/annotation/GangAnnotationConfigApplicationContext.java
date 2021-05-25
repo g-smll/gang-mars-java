@@ -37,10 +37,14 @@ public class GangAnnotationConfigApplicationContext {
     public Object createBean(String beanName, BeanDefinition beanDefinition){
         Class clazz = beanDefinition.getClazz();
         try {
-            Object instance = clazz.getDeclaredConstructor().newInstance();
             //#################################################################
-            //Spring 通过构造器，实例对象
+            //Spring 通过构造器，实例对象代码实现
             //Object instance = clazz.getConstructor().newInstance();
+            //#################################################################
+            Object instance = clazz.getDeclaredConstructor().newInstance();
+
+            //#################################################################
+            //需要实现依赖注入
             //#################################################################
             return instance;
         }

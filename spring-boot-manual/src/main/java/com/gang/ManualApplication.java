@@ -12,5 +12,11 @@ public class ManualApplication {
     public static void main(String[] args) {
         GangAnnotationConfigApplicationContext context = new GangAnnotationConfigApplicationContext(AppConfig.class);
         Object userService = context.getBean("userService");
+
+
+        System.out.println(context.getBean("userService"));
+        System.out.println(context.getBean("userService"));
+        System.out.println(context.getBean("userService"));
+
     }
 }

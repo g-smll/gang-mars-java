@@ -3,9 +3,11 @@ package org.springframework.my.context.annotation;
 import org.springframework.my.stereotype.Component;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author gang.chen
@@ -16,7 +18,49 @@ public class GangAnnotationConfigApplicationContext {
 
     private Class configClass;
 
+    private ConcurrentHashMap<String,Object> singletonObjects = new ConcurrentHashMap<>();
+
+    private ConcurrentHashMap<String,BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>();
+
     public GangAnnotationConfigApplicationContext(Class<?> configClass){
+        scan(configClass);
+        beanDefinitionMap.forEach((k,v) ->{
+            if (v.getScope().equals("singleton")) {
+                Object bean = createBean(k,v);
+                singletonObjects.put(k,bean);
+            }else{
+                //TODO TBD
+            }
+        });
+    }
+
+    public Object createBean(String beanName, BeanDefinition beanDefinition){
+        Class clazz = beanDefinition.getClazz();
+        try {
+            Object instance = clazz.getDeclaredConstructor().newInstance();
+            //#################################################################
+            //Spring 通过构造器，实例对象
+            //Object instance = clazz.getConstructor().newInstance();
+            //#################################################################
+            return instance;
+        }
+        catch (InstantiationException e) {
+            e.printStackTrace();
+        }
+        catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    private void scan(Class<?> configClass) {
         this.configClass = configClass;
 
         //######################################
@@ -52,10 +96,22 @@ public class GangAnnotationConfigApplicationContext {
                     if (absolutePath.endsWith(".class")) {
                         String className = absolutePath.substring(absolutePath.indexOf("com"),absolutePath.indexOf(".class"));
                         className = className.replace("\\",".");
-                        Class<?> aClass = classLoader.loadClass(className);
-                        //判断类UserService注解了Component
-                        if (aClass.isAnnotationPresent(Component.class)) {
-
+                        Class<?> clazz = classLoader.loadClass(className);
+                        //####################################
+                        //1,创建BeanDefinition
+                        //####################################
+                        if (clazz.isAnnotationPresent(Component.class)) {
+                            Component componentAnnotation = clazz.getDeclaredAnnotation(Component.class);
+                            String beanName = componentAnnotation.value();
+                            BeanDefinition beanDefinition = new BeanDefinition();
+                            if (clazz.isAnnotationPresent(Scope.class)) {
+                                Scope scopeAnnotation = clazz.getDeclaredAnnotation(Scope.class);
+                                beanDefinition.setScope(scopeAnnotation.value());
+                            }else{
+                                beanDefinition.setScope("singleton");
+                            }
+                            beanDefinition.setClazz(clazz);
+                            beanDefinitionMap.put(beanName,beanDefinition);
                         }
                     }
                 }
@@ -67,6 +123,15 @@ public class GangAnnotationConfigApplicationContext {
     }
 
     public Object getBean(String beanName){
-        return null;
+        if (beanDefinitionMap.containsKey(beanName)) {
+            BeanDefinition beanDefinition = beanDefinitionMap.get(beanName);
+            if(beanDefinition.getScope().equals("singleton")){
+                return singletonObjects.get(beanName);
+            }else{
+                return createBean(beanName,beanDefinition);
+            }
+        }else {
+            throw new NullPointerException();
+        }
     }
 }

@@ -3,6 +3,7 @@ package org.springframework.my.context.annotation;
 import org.springframework.my.stereotype.Component;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.Arrays;
@@ -45,19 +46,18 @@ public class GangAnnotationConfigApplicationContext {
 
             //#################################################################
             //需要实现依赖注入
+            //spring 实际注入，本质也是bean的创建过程
             //#################################################################
+            for (Field field : clazz.getDeclaredFields()) {
+                if (field.isAnnotationPresent(Autowired.class)) {
+                    Object bean = getBean(field.getName());
+                    field.setAccessible(true);
+                    field.set(instance, bean);
+                }
+            }
             return instance;
         }
-        catch (InstantiationException e) {
-            e.printStackTrace();
-        }
-        catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
-        catch (NoSuchMethodException e) {
+        catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
 

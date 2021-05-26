@@ -5,7 +5,7 @@ import org.springframework.my.stereotype.Component;
 
 /**
  * @author gang.chen
- * @description
+ * @description 实践注入
  * @time 2021/5/24 12:39
  */
 //@Scope("prototype")

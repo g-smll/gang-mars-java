@@ -15,5 +15,6 @@ public class InvoiceServiceImpl implements InvoiceService, BeanNameAware {
     @Override
     public void setBeanName(String name) {
         this.beanName = name;
+        System.out.println("InvoiceServiceImpl->setBeanName->"+beanName);
     }
 }

@@ -1,12 +1,15 @@
 package org.springframework.my.context.annotation;
 
+import com.gang.service.InitializingBean;
 import org.springframework.my.stereotype.Component;
 
 import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -22,6 +25,8 @@ public class GangAnnotationConfigApplicationContext {
     private ConcurrentHashMap<String,Object> singletonObjects = new ConcurrentHashMap<>();
 
     private ConcurrentHashMap<String,BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>();
+
+    private List<BeanPostprocessor> beanPostprocessorList = new ArrayList<>();
 
     public GangAnnotationConfigApplicationContext(Class<?> configClass){
         scan(configClass);
@@ -45,7 +50,7 @@ public class GangAnnotationConfigApplicationContext {
             Object instance = clazz.getDeclaredConstructor().newInstance();
 
             //#################################################################
-            //需要实现依赖注入
+            //实现依赖注入
             //spring 实际注入，本质也是bean的创建过程
             //#################################################################
             for (Field field : clazz.getDeclaredFields()) {
@@ -55,9 +60,35 @@ public class GangAnnotationConfigApplicationContext {
                     field.set(instance, bean);
                 }
             }
+            //#################################################################
+            //实现Aware回调
+            //#################################################################
+            if (instance instanceof BeanNameAware) {
+                ((BeanNameAware) instance).setBeanName(beanName);
+            }
+
+            //#################################################################
+            //BeanPostprocessor before回调
+            //#################################################################
+            beanPostprocessorList.forEach(beanPostprocessor -> {
+                beanPostprocessor.postProcessBeforeInitialization(instance,beanName);
+            });
+
+            //#################################################################
+            //初始化回调
+            //#################################################################
+            if (instance instanceof InitializingBean) {
+                ((InitializingBean) instance).afterPropertiesSet();
+            }
+            //#################################################################
+            //BeanPostprocess after回调
+            //#################################################################
+            beanPostprocessorList.forEach(beanPostprocessor -> {
+                beanPostprocessor.postProcessBeforeInitialization(instance,beanName);
+            });
             return instance;
         }
-        catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+        catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -102,9 +133,17 @@ public class GangAnnotationConfigApplicationContext {
                         className = className.replace("\\",".");
                         Class<?> clazz = classLoader.loadClass(className);
                         //####################################
-                        //1,创建BeanDefinition
+                        //判断clazz是否注解Component
                         //####################################
                         if (clazz.isAnnotationPresent(Component.class)) {
+                            //####################################
+                            //判断Clazz是否为一个BeanPostProcessor
+                            //####################################
+                            if (BeanPostprocessor.class.isAssignableFrom(clazz)) {
+                                BeanPostprocessor beanPostprocessor = (BeanPostprocessor) clazz.getDeclaredConstructor().newInstance();
+                                beanPostprocessorList.add(beanPostprocessor);
+                            }
+
                             Component componentAnnotation = clazz.getDeclaredAnnotation(Component.class);
                             String beanName = componentAnnotation.value();
                             BeanDefinition beanDefinition = new BeanDefinition();
@@ -119,7 +158,7 @@ public class GangAnnotationConfigApplicationContext {
                         }
                     }
                 }
-                catch (ClassNotFoundException e) {
+                catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
                     e.printStackTrace();
                 }
             });

@@ -20,6 +20,9 @@ public class SpringApplication {
         tomcatOn();
     }
 
+    /**
+     * 参数原代码 TomcatServletWebServerFactory
+     * */
     public static void startTomcat(){
         Tomcat tomcat = new Tomcat();
 
@@ -40,12 +43,12 @@ public class SpringApplication {
         context.setPath(contextPath);
         context.addLifecycleListener(new Tomcat.FixContextListener());
 
+
         host.addChild(context);
         engine.addChild(host);
 
         service.setContainer(engine);
         service.addConnector(connector);
-
         tomcat.addServlet(contextPath,"dispatcher",new DispatcherServlet());
         context.addServletMappingDecoded("/*","dispatcher");
 

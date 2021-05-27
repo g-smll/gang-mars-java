@@ -16,6 +16,7 @@
         <module>spring-boot-validation</module>
         <module>spring-boot-basic</module>
         <module>spring-boot-manual</module>
+        <module>spring-boot-tomcat</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

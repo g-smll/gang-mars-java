@@ -1,6 +1,7 @@
 package com.gang.mars.mvc;
 
-import org.springframework.SpringApplication;
+
+import gang.org.springframework.SpringApplication;
 
 /**
  * @author gang.chen

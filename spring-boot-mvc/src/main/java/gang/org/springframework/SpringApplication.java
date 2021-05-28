@@ -1,10 +1,8 @@
-package org.springframework;
+package gang.org.springframework;
 
-import org.apache.catalina.*;
-import org.apache.catalina.connector.Connector;
-import org.apache.catalina.core.StandardContext;
-import org.apache.catalina.core.StandardEngine;
-import org.apache.catalina.core.StandardHost;
+import org.apache.catalina.Context;
+import org.apache.catalina.LifecycleException;
+import org.apache.catalina.LifecycleListener;
 import org.apache.catalina.startup.Tomcat;
 
 /**

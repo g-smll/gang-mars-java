@@ -93,6 +93,6 @@ public class SpringServletContainerInitializer implements ServletContainerInitia
 
     @Override
     public void onStartup(Set<Class<?>> c, ServletContext ctx) throws ServletException {
-        System.out.println("GangSpringServletContainerInitializer->onStartup()");
+        //System.out.println("GangSpringServletContainerInitializer->onStartup()");
     }
 }

@@ -5,7 +5,7 @@ import gang.org.springframework.SpringApplication;
 
 /**
  * @author gang.chen
- * @description
+ * @description Spring mvc 实践
  * @time 2021/5/28 8:19
  */
 public class ApplicationMvc {

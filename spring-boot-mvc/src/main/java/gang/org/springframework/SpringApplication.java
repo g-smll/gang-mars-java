@@ -29,6 +29,8 @@ public class SpringApplication {
             e.printStackTrace();
         }
 
+
+        System.out.println("tomcat 8080 启动完成...");
         tomcat.getServer().await();
     }
 }

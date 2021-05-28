@@ -5,6 +5,8 @@ import javax.servlet.ServletContainerInitializer;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.HandlesTypes;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ServiceLoader;
 import java.util.Set;
 
@@ -91,8 +93,34 @@ import java.util.Set;
 public class SpringServletContainerInitializer implements ServletContainerInitializer{
 
     @Override
-    public void onStartup(Set<Class<?>> c, ServletContext ctx) throws ServletException {
-        System.out.println("GangSpringServletContainerInitializer->onStartup()");
-        System.out.println(c);
+    public void onStartup(Set<Class<?>> c, ServletContext ctx) {
+        System.out.println("tomcat servlet onStartup 启动 ...");
+
+        c.forEach(aClass -> {
+            Method method = null;
+            try {
+                method = aClass.getMethod("onStartup", ServletContext.class);
+            }
+            catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            }
+
+            Object o = null;
+            try {
+                o = aClass.newInstance();
+            }
+            catch (InstantiationException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
+
+            Object invoke = null;
+            try {
+                invoke = method.invoke(o, ctx);
+            }
+            catch (IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        });
+
     }
 }

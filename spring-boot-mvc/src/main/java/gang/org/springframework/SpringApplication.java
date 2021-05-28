@@ -21,21 +21,6 @@ public class SpringApplication {
         TomcatRun();
     }
 
-    public static void tomcatOn(){
-        Tomcat tomcat = new Tomcat();
-        tomcat.setPort(8080);
-        Context context = tomcat.addContext("/", System.getProperty("java.io.tmpdir"));
-        try {
-            context.addLifecycleListener((LifecycleListener) Class.forName(tomcat.getHost().getConfigClass()).newInstance());
-            tomcat.start();
-        }
-        catch (InstantiationException | IllegalAccessException | ClassNotFoundException | LifecycleException e) {
-            e.printStackTrace();
-        }
-
-        tomcat.getServer().await();
-    }
-
     public static void TomcatRun(){
         Tomcat tomcat = new Tomcat();
 
@@ -73,5 +58,20 @@ public class SpringApplication {
         catch (LifecycleException e){
             e.printStackTrace();
         }
+    }
+
+    public static void tomcatOn(){
+        Tomcat tomcat = new Tomcat();
+        tomcat.setPort(8080);
+        Context context = tomcat.addContext("/", System.getProperty("java.io.tmpdir"));
+        try {
+            context.addLifecycleListener((LifecycleListener) Class.forName(tomcat.getHost().getConfigClass()).newInstance());
+            tomcat.start();
+        }
+        catch (InstantiationException | IllegalAccessException | ClassNotFoundException | LifecycleException e) {
+            e.printStackTrace();
+        }
+
+        tomcat.getServer().await();
     }
 }

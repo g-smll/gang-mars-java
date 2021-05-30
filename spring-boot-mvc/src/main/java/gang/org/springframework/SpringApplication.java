@@ -17,11 +17,11 @@ public class SpringApplication {
 
 
     public static void run(Class<?> primarySource, String... args){
-        tomcatOn();
-        startTomcat();
+        //tomcatOn();
+        TomcatRun();
     }
 
-    public static void startTomcat() {
+    public static void TomcatRun(){
         Tomcat tomcat = new Tomcat();
 
         Server server = tomcat.getServer();
@@ -42,14 +42,14 @@ public class SpringApplication {
         context.addLifecycleListener(new Tomcat.FixContextListener());
 
 
-
         host.addChild(context);
         engine.addChild(host);
 
         service.setContainer(engine);
         service.addConnector(connector);
-        tomcat.addServlet(contextPath,"dispatcher",new DispatcherServlet());
-        context.addServletMappingDecoded("/*","dispatcher");
+        Wrapper dispatcher = tomcat.addServlet(contextPath, "dispatcher", new DispatcherServlet());
+        dispatcher.setLoadOnStartup(1);
+        dispatcher.addMapping("/*");
 
         try{
             tomcat.start();
@@ -63,8 +63,7 @@ public class SpringApplication {
     public static void tomcatOn(){
         Tomcat tomcat = new Tomcat();
         tomcat.setPort(8080);
-
-        Context context = tomcat.addContext("", "D:\\work\\learn\\gang-mars-java\\docBase");
+        Context context = tomcat.addContext("/", System.getProperty("java.io.tmpdir"));
         try {
             context.addLifecycleListener((LifecycleListener) Class.forName(tomcat.getHost().getConfigClass()).newInstance());
             tomcat.start();
@@ -73,8 +72,6 @@ public class SpringApplication {
             e.printStackTrace();
         }
 
-
-        System.out.println("tomcat 8080 启动完成...");
         tomcat.getServer().await();
     }
 }

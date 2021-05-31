@@ -3,13 +3,13 @@ package gang.org.springframework.web;
 import com.gang.mars.mvc.config.SpringMvcConfig;
 import gang.org.springframework.annotation.ComponentScan;
 import gang.org.springframework.annotation.Controller;
+import gang.org.springframework.annotation.RequestMapping;
 
 import java.io.File;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author gang.chen
@@ -19,12 +19,25 @@ import java.util.Set;
 public class RequestMappingHandlerMapping {
 
     Set<Class<?>> classes = new HashSet();
+    HashMap<String, HandlerMethod> registry = new HashMap<>();
 
 
     public void initHandlerMappings(){
-        System.out.println("RequestMappingHandlerMapping->initHandlerMappings() #####初始化####");
+        System.out.println("RequestMappingHandlerMapping->initHandlerMappings() #####初始化开始####");
         Set<Class<?>> aClasses = scan(SpringMvcConfig.class);
-        System.out.println(aClasses);
+        aClasses.forEach(c->{
+            Method[] declaredMethods = c.getDeclaredMethods();
+            Arrays.stream(declaredMethods).forEach(m->{
+                RequestMapping declaredRequestMapping = m.getDeclaredAnnotation(RequestMapping.class);
+                if (declaredRequestMapping !=null) {
+                    String urlMapping = declaredRequestMapping.value();
+                    registry.put(urlMapping,new HandlerMethod(newInstance(c),m));
+                    System.out.println(registry);
+                }
+
+            });
+        });
+        System.out.println("RequestMappingHandlerMapping->initHandlerMappings() #####初始化结束####");
     }
 
     public Set<Class<?>> scan(Class config){
@@ -54,5 +67,15 @@ public class RequestMappingHandlerMapping {
             });
         }
         return classes;
+    }
+
+    private Object newInstance(Class clazz){
+        try {
+            return clazz.newInstance();
+        }
+        catch (InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

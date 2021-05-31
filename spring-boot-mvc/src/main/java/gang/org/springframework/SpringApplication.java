@@ -17,7 +17,6 @@ public class SpringApplication {
 
 
     public static void run(Class<?> primarySource, String... args){
-        //tomcatOn();
         TomcatRun();
     }
 

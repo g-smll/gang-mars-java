@@ -78,4 +78,8 @@ public class RequestMappingHandlerMapping {
         }
         return null;
     }
+
+    public HandlerMethod getHandlerMethod(String url){
+        return registry.get(url);
+    }
 }

@@ -20,5 +20,7 @@ public class FrameworkServlet extends HttpServletBean {
     protected void onRefresh() {
     }
 
-
+    @Override
+    protected void doService(HttpServletRequest req, HttpServletResponse resp) {
+    }
 }

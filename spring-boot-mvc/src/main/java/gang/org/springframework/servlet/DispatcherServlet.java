@@ -1,6 +1,7 @@
 package gang.org.springframework.servlet;
 
 import gang.org.springframework.web.HandlerMethod;
+import gang.org.springframework.web.ModelAndView;
 import gang.org.springframework.web.RequestMappingHandlerMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,8 +40,10 @@ public class DispatcherServlet extends FrameworkServlet {
         String url = req.getRequestURI();
         HandlerExecutionChain handler = getHandler(url);
         if (handler !=null) {
-
+            System.out.println("DispatcherServlet->doDispatch()->404异常");
         }
+
+        ModelAndView mv = handler.handler();
     }
 
     private HandlerExecutionChain getHandler(String url){

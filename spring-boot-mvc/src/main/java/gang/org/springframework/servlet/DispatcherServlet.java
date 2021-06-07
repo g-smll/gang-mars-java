@@ -6,6 +6,7 @@ import gang.org.springframework.web.RequestMappingHandlerMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * @author gang.chen
@@ -39,11 +40,24 @@ public class DispatcherServlet extends FrameworkServlet {
         System.out.println("DispatcherServlet->doDispatch()->接收请求");
         String url = req.getRequestURI();
         HandlerExecutionChain handler = getHandler(url);
-        if (handler !=null) {
+        if (handler ==null) {
             System.out.println("DispatcherServlet->doDispatch()->404异常");
+            return;
         }
 
         ModelAndView mv = handler.handler();
+        
+        render(mv,req,resp);
+    }
+
+    private void render(ModelAndView modelAndView,HttpServletRequest req, HttpServletResponse resp) {
+        String viewName = modelAndView.getViewName();
+        try {
+            resp.getOutputStream().write(viewName.getBytes());
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private HandlerExecutionChain getHandler(String url){

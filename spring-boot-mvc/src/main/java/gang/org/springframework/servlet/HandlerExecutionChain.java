@@ -3,6 +3,9 @@ package gang.org.springframework.servlet;
 import gang.org.springframework.web.HandlerMethod;
 import gang.org.springframework.web.ModelAndView;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 /**
  * @author gang.chen
  * @description
@@ -16,12 +19,22 @@ public class HandlerExecutionChain {
         this.handlerMethod = handlerMethod;
     }
 
+    public HandlerMethod getHandlerMethod() {
+        return this.handlerMethod;
+    }
+
     public ModelAndView handler(){
+        Method method = handlerMethod.getMethod();
+        try {
+            Object obj = method.invoke(handlerMethod.getBean(), null);
+            return new ModelAndView(obj,obj.toString());
+        }
+        catch (IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
 
-    public HandlerMethod getHandlerMethod() {
-        return this.handlerMethod;
-    }
+
 }

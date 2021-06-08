@@ -40,6 +40,9 @@ public class RequestMappingHandlerMapping {
         System.out.println("RequestMappingHandlerMapping->initHandlerMappings() #####初始化结束####");
     }
 
+    /**
+     * 扫描单个包
+     * */
     public Set<Class<?>> scan(Class config){
         ComponentScan declaredAnnotation = (ComponentScan) config.getDeclaredAnnotation(ComponentScan.class);
         String componentPath = declaredAnnotation.value();

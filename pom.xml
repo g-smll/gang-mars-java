@@ -19,6 +19,7 @@
         <module>spring-boot-tomcat</module>
         <module>spring-boot-mvc</module>
         <module>spring-boot-resource-mvc</module>
+        <module>spring-boot-manual-boot</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

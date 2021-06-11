@@ -1,4 +1,4 @@
-package gang.org.springframework.boot;
+package gang.org.springframework.framework;
 
 public interface GangConfigurableApplicationContext {
     void refresh();

@@ -1,7 +1,6 @@
 package gang.org.springframework.boot;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.function.Supplier;
+import gang.org.springframework.framework.GangConfigurableApplicationContext;
 
 @FunctionalInterface
 public interface GangApplicationContextFactory {

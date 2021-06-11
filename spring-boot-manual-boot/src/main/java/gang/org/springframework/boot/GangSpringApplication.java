@@ -10,11 +10,34 @@ public class GangSpringApplication {
 
     private GangApplicationContextFactory applicationContextFactory = GangApplicationContextFactory.DEFAULT;
 
-    public static GangConfigurableApplicationContext run(Class<?> primaryClass, String ... args){
+
+    public static  GangConfigurableApplicationContext run (Class<?> primaryClass, String ... args){
+
+        return new GangSpringApplication().doRun(primaryClass,args);
+    }
+
+    public GangConfigurableApplicationContext doRun(Class<?> primaryClass, String ... args){
 
         System.out.println("GangSpringApplication-> starting ...");
 
-        //GangConfigurableApplicationContext gangConfigurableApplicationContext = applicationContextFactory.create();
+        GangConfigurableApplicationContext context = null;
+
+
+        context = createApplicationContext();
+
+
         return null;
+    }
+
+    protected GangConfigurableApplicationContext createApplicationContext(){
+        return this.applicationContextFactory.create();
+    }
+
+    private void refreshContext(){
+
+    }
+
+    private void refresh(GangConfigurableApplicationContext context){
+        context.refresh();
     }
 }

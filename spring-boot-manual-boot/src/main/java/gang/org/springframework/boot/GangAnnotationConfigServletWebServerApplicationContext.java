@@ -6,4 +6,7 @@ package gang.org.springframework.boot;
  * @time 2021/6/10 13:03
  */
 public class GangAnnotationConfigServletWebServerApplicationContext implements GangConfigurableApplicationContext {
+    @Override
+    public void refresh() {
+    }
 }

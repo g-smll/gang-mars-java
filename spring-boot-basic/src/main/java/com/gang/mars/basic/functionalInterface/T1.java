@@ -17,6 +17,9 @@ public class T1 {
         System.out.println(s3);
 
         T5 t5 = (str)-> "hello !"+str;
+        T5 t50 = T5.DEFAULT;
+        String obj = t50.getObj("Hello How Are You!");
+        System.out.println(obj);
         String gangC = t5.getObj("GangC");
         System.out.println(gangC);
     }

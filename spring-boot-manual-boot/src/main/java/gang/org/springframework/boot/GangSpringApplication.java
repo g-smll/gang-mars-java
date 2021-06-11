@@ -1,6 +1,9 @@
 package gang.org.springframework.boot;
 
 import gang.org.springframework.framework.GangConfigurableApplicationContext;
+import gang.org.springframework.framework.GangResourceLoader;
+
+import java.util.Set;
 
 /**
  * @author gang.chen
@@ -9,16 +12,36 @@ import gang.org.springframework.framework.GangConfigurableApplicationContext;
  */
 public class GangSpringApplication {
 
+    private GangResourceLoader resourceLoader;
 
+    private Set<Class<?>> primarySource;
+
+    private GangWebApplicationType webApplicationType;
+
+
+    //#############################################################
+    //GangApplicationContextFactory
+    //函数式接口，获取函数式接口本身
+    //#############################################################
     private GangApplicationContextFactory applicationContextFactory = GangApplicationContextFactory.DEFAULT;
 
 
-    public static GangConfigurableApplicationContext run (Class<?> primaryClass, String ... args){
-
-        return new GangSpringApplication().doRun(primaryClass,args);
+    public GangSpringApplication(Class<?>... primarySource){
+        this(null,primarySource);
     }
 
-    public GangConfigurableApplicationContext doRun(Class<?> primaryClass, String ... args){
+    public GangSpringApplication(GangResourceLoader resourceLoader, Class<?>... primarySource){
+    }
+
+
+
+    public static GangConfigurableApplicationContext run (Class<?> primaryClass, String ... args){
+        return new GangSpringApplication(primaryClass).run(args);
+    }
+
+
+
+    public GangConfigurableApplicationContext run(String[] args){
 
         System.out.println("GangSpringApplication-> starting ...");
 

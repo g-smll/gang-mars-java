@@ -1,16 +1,12 @@
-package gang.org.springframework.framework;
+package gang.org.springframework.boot.context;
 
-import gang.org.springframework.framework.context.GangAbstractApplicationContext;
+import gang.org.springframework.framework.context.GangGenericApplicationContext;
 import gang.org.springframework.framework.context.GangGenericWebApplicationContext;
 
 /**
  * @author gang.chen
  * @description
- * @time 2021/6/11 12:44
+ * @time 2021/6/13 22:31
  */
 public class GangServletWebServerApplicationContext extends GangGenericWebApplicationContext {
-    @Override
-    public void refresh() {
-        super.refresh();
-    }
 }

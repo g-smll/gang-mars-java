@@ -1,9 +1,9 @@
 package gang.org.springframework.boot;
 
-import gang.org.springframework.framework.GangConfigurableApplicationContext;
+import gang.org.springframework.framework.context.GangConfigurableApplicationContext;
 import gang.org.springframework.framework.GangResourceLoader;
 
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author gang.chen
@@ -18,6 +18,8 @@ public class GangSpringApplication {
 
     private GangWebApplicationType webApplicationType;
 
+    private List<GangApplicationContextInitializer<?>> initializers;
+
 
     //#############################################################
     //GangApplicationContextFactory
@@ -31,6 +33,8 @@ public class GangSpringApplication {
     }
 
     public GangSpringApplication(GangResourceLoader resourceLoader, Class<?>... primarySource){
+
+        //setInitializers(null);
     }
 
 
@@ -57,6 +61,10 @@ public class GangSpringApplication {
 
             context = createApplicationContext();
 
+            //#############################################################
+            //refreshContext
+            //Spring IOC 入口中
+            //#############################################################
             refreshContext(context);
 
             afterRefresh(context,applicationArguments);
@@ -91,6 +99,10 @@ public class GangSpringApplication {
 
     private GangSpringApplicationRunListeners getRunListeners(String[] args){
         return new GangSpringApplicationRunListeners();
+    }
+
+    public void setInitializers(Collection<? extends GangApplicationContextInitializer<?>> initializers){
+        this.initializers = new ArrayList(initializers);
     }
 
 }

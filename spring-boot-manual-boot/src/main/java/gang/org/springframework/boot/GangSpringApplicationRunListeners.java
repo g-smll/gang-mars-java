@@ -1,7 +1,6 @@
 package gang.org.springframework.boot;
 
-import gang.org.springframework.framework.GangConfigurableApplicationContext;
-import gang.org.springframework.framework.GangConfigurableListableBeanFactory;
+import gang.org.springframework.framework.context.GangConfigurableApplicationContext;
 
 /**
  * @author gang.chen

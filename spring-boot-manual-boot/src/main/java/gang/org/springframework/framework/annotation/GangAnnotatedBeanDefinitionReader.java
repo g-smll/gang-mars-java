@@ -21,5 +21,6 @@ public class GangAnnotatedBeanDefinitionReader {
      * */
     public GangAnnotatedBeanDefinitionReader(GangBeanDefinitionRegistry registry, Object environment){
         this.registry = registry;
+        GangAnnotationConfigUtils.registerAnnotationConfigProcessors(registry);
     }
 }

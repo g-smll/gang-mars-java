@@ -1,6 +1,7 @@
 package gang.org.springframework.framework.context;
 
 import gang.org.springframework.framework.bean.GangBeanDefinition;
+import gang.org.springframework.framework.factory.GangConfigurableListableBeanFactory;
 import gang.org.springframework.framework.factory.GangDefaultListableBeanFactory;
 import gang.org.springframework.framework.support.GangBeanDefinitionRegistry;
 
@@ -22,7 +23,9 @@ public class GangGenericApplicationContext extends GangAbstractApplicationContex
         beanFactory.registerBeanDefinition(beanName,beanDefinition);
     }
 
-    public GangDefaultListableBeanFactory getBeanFactory() {
+
+    @Override
+    public GangConfigurableListableBeanFactory getBeanFactory() {
         return this.beanFactory;
     }
 }

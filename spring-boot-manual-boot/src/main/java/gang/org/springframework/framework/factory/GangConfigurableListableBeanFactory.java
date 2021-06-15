@@ -1,4 +1,4 @@
-package gang.org.springframework.framework;
+package gang.org.springframework.framework.factory;
 
 /**
  * @author gang.chen

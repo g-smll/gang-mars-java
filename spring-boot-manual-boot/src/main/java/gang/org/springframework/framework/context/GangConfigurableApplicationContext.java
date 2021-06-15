@@ -1,5 +1,9 @@
 package gang.org.springframework.framework.context;
 
-public interface GangConfigurableApplicationContext {
+import gang.org.springframework.framework.factory.GangConfigurableListableBeanFactory;
+
+public interface GangConfigurableApplicationContext extends GangApplicationContext{
     void refresh();
+
+    GangConfigurableListableBeanFactory getBeanFactory();
 }

@@ -1,7 +1,12 @@
 package gang.org.springframework.framework.context;
 
-import gang.org.springframework.framework.GangConfigurableListableBeanFactory;
-import gang.org.springframework.framework.context.GangConfigurableApplicationContext;
+import com.sun.xml.internal.messaging.saaj.packaging.mime.util.BEncoderStream;
+import gang.org.springframework.framework.beanfactorypostprocessor.GangBeanFactoryPostProcessor;
+import gang.org.springframework.framework.factory.GangConfigurableListableBeanFactory;
+import gang.org.springframework.framework.support.GangPostProcessorRegistrationDelegate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author gang.chen
@@ -9,6 +14,9 @@ import gang.org.springframework.framework.context.GangConfigurableApplicationCon
  * @time 2021/6/11 8:45
  */
 public abstract class GangAbstractApplicationContext implements GangConfigurableApplicationContext {
+
+    private final List<GangBeanFactoryPostProcessor> beanFactoryPostProcessors = new ArrayList<>();
+
     @Override
     public void refresh() {
         System.out.println("GangAbstractApplicationContext->refresh()-> running...");
@@ -43,12 +51,15 @@ public abstract class GangAbstractApplicationContext implements GangConfigurable
         }
     }
 
+    @Override
+    public abstract GangConfigurableListableBeanFactory getBeanFactory();
+
 
     protected void prepareRefresh(){
     }
 
     protected GangConfigurableListableBeanFactory obtainFreshBeanFactory(){
-        return null;
+        return getBeanFactory();
     }
 
     protected void prepareBeanFactory(GangConfigurableListableBeanFactory beanFactory){
@@ -59,8 +70,11 @@ public abstract class GangAbstractApplicationContext implements GangConfigurable
 
     }
 
+    /**
+     * @param beanFactory {@link gang.org.springframework.framework.factory.GangDefaultListableBeanFactory}
+     * */
     protected void invokeBeanFactoryPostProcessor(GangConfigurableListableBeanFactory beanFactory){
-
+        GangPostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(beanFactory,getBeanFactoryPostProcessors());
     }
 
     protected void registerBeanPostProcessors(GangConfigurableListableBeanFactory beanFactory){
@@ -89,5 +103,14 @@ public abstract class GangAbstractApplicationContext implements GangConfigurable
 
     protected void finishRefresh(){
 
+    }
+
+    @Override
+    public String[] getBeanNameForType(Class type, boolean includeNonSingletons, boolean allowEagerInit) {
+        return null;
+    }
+
+    public List<GangBeanFactoryPostProcessor> getBeanFactoryPostProcessors(){
+        return null;
     }
 }

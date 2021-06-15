@@ -33,7 +33,8 @@ public abstract class GangAnnotationConfigUtils {
     }
 
     private static GangDefaultListableBeanFactory unwrapDefaultListableBeanFactory(GangBeanDefinitionRegistry registry){
-        return ((GangGenericApplicationContext)registry).getBeanFactory();
+        //return ((GangGenericApplicationContext)registry).getBeanFactory();
+        return null;
     }
 
     private static GangBeanDefinitionHolder registerPosProcessor(GangBeanDefinitionRegistry registry, GangRootBeanDefinition definition,String beanName){

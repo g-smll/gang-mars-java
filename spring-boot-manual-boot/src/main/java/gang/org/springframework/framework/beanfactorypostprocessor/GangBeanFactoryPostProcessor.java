@@ -1,6 +1,6 @@
 package gang.org.springframework.framework.beanfactorypostprocessor;
 
-import gang.org.springframework.framework.GangConfigurableListableBeanFactory;
+import gang.org.springframework.framework.factory.GangConfigurableListableBeanFactory;
 
 @FunctionalInterface
 public interface GangBeanFactoryPostProcessor {

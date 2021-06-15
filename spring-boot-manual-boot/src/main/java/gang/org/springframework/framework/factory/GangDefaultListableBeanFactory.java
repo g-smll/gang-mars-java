@@ -25,4 +25,9 @@ public class GangDefaultListableBeanFactory implements GangConfigurableListableB
         this.beanDefinitionNames.add(beanName);
         this.beanDefinitionMap.put(beanName,beanDefinition);
     }
+
+    /*@Override
+    public String[] getBeanNamesForType(Class type, boolean includeNonSingletons, boolean allowEagerInit) {
+        return null;
+    }*/
 }

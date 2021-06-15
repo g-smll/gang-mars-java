@@ -11,6 +11,9 @@ public class GangAnnotatedBeanDefinitionReader {
 
     private final GangBeanDefinitionRegistry registry;
 
+    /**
+     * @param registry {@link gang.org.springframework.boot.context.GangAnnotationConfigServletWebServerApplicationContext}
+     * */
     public GangAnnotatedBeanDefinitionReader(GangBeanDefinitionRegistry registry){
         this(registry,null);
     }

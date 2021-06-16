@@ -9,7 +9,11 @@ public class GangAbstractBeanDefinition extends GangBeanMetadataAttributeAccesso
 
     private int role = GangBeanDefinition.ROLE_INFRASTRUCTURE;
 
+    public static final String SCOPE_DEFAULT = "";
+
     private volatile Object beanClass;
+
+    private String scope = SCOPE_DEFAULT;
 
     @Override
     public void setRole(int role) {
@@ -18,5 +22,10 @@ public class GangAbstractBeanDefinition extends GangBeanMetadataAttributeAccesso
 
     public void setBeanClass(Object beanClass) {
         this.beanClass = beanClass;
+    }
+
+    @Override
+    public String getScope() {
+        return this.scope;
     }
 }

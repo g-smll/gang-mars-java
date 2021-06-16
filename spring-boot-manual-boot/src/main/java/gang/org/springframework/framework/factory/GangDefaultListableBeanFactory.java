@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @description
  * @time 2021/6/14 13:56
  */
-public class GangDefaultListableBeanFactory implements GangConfigurableListableBeanFactory,GangBeanDefinitionRegistry,GangBeanFactory {
+public class GangDefaultListableBeanFactory extends GangAbstractAutowireCapableBeanFactory implements GangConfigurableListableBeanFactory,GangBeanDefinitionRegistry {
 
     private volatile List<String> beanDefinitionNames = new ArrayList<>(256);
 

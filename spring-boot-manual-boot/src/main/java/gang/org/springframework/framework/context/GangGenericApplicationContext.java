@@ -28,4 +28,10 @@ public class GangGenericApplicationContext extends GangAbstractApplicationContex
     public GangConfigurableListableBeanFactory getBeanFactory() {
         return this.beanFactory;
     }
+
+    //TODO
+    @Override
+    public <T> T getBean(String name, Class<T> requiredType) {
+        return null;
+    }
 }

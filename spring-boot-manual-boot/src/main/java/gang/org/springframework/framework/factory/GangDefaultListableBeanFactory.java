@@ -2,8 +2,10 @@ package gang.org.springframework.framework.factory;
 
 import gang.org.springframework.framework.bean.GangBeanDefinition;
 import gang.org.springframework.framework.support.GangBeanDefinitionRegistry;
+import gang.org.springframework.framework.support.GangResolvableType;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -26,8 +28,16 @@ public class GangDefaultListableBeanFactory implements GangConfigurableListableB
         this.beanDefinitionMap.put(beanName,beanDefinition);
     }
 
-    /*@Override
+    @Override
     public String[] getBeanNamesForType(Class type, boolean includeNonSingletons, boolean allowEagerInit) {
-        return null;
-    }*/
+        return doGetBeanNamesForType(GangResolvableType.forRawClass(type),includeNonSingletons,true);
+    }
+
+    public String[] doGetBeanNamesForType(GangResolvableType type, boolean includeNonSingletons,boolean allowEagerInit){
+        List<String> result = new ArrayList<>();
+        for (String beanDefinitionName : this.beanDefinitionNames) {
+            result.add(beanDefinitionName);
+        }
+        return result.stream().toArray(String[]::new);
+    }
 }

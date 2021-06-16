@@ -105,10 +105,10 @@ public abstract class GangAbstractApplicationContext implements GangConfigurable
 
     }
 
-    /*@Override
-    public String[] getBeanNameForType(Class type, boolean includeNonSingletons, boolean allowEagerInit) {
+    @Override
+    public String[] getBeanNamesForType(Class type, boolean includeNonSingletons, boolean allowEagerInit) {
         return null;
-    }*/
+    }
 
     public List<GangBeanFactoryPostProcessor> getBeanFactoryPostProcessors(){
         return null;

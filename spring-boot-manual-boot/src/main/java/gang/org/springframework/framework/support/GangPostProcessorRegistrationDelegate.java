@@ -14,8 +14,12 @@ import java.util.List;
  */
 public final class GangPostProcessorRegistrationDelegate {
 
+    /**
+     * @param beanFactory {@link gang.org.springframework.framework.factory.GangDefaultListableBeanFactory}
+     * */
     public static void invokeBeanFactoryPostProcessors(GangConfigurableListableBeanFactory beanFactory, List<GangBeanFactoryPostProcessor> beanFactoryPostProcessors){
         List<GangBeanDefinitionRegistryPostProcessor> currentRegistryProcessors = new ArrayList<>();
+        String[] postProcessorNames = beanFactory.getBeanNamesForType(GangBeanDefinitionRegistryPostProcessor.class,true,false);
 
     }
 }

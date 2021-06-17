@@ -9,7 +9,7 @@ import gang.org.springframework.framework.bean.GangRootBeanDefinition;
  * @description
  * @time 2021/6/16 19:08
  */
-public abstract class GangAbstractBeanFactory implements GangConfigurableBeanFactory{
+public abstract class GangAbstractBeanFactory extends GangFactoryBeanRegistrySupport implements GangConfigurableBeanFactory{
 
     /**
      * @param requiredType {@link gang.org.springframework.framework.beanfactorypostprocessor.GangBeanDefinitionRegistryPostProcessor}
@@ -21,10 +21,18 @@ public abstract class GangAbstractBeanFactory implements GangConfigurableBeanFac
 
     protected <T> T doGetBean(String name,Class<T> requiredType, Object[] args, boolean typeCheckOnly){
 
-        //todo
+        //TODO
         String beanName = name;
 
         GangRootBeanDefinition mbd = getMergedLocalBeanDefinition(beanName);
+
+        if (mbd.isSingleton()) {
+            //TODO
+            Object sharedInstance = getSingleton(beanName, () -> {
+                return null;
+            });
+        }
+
 
         return null;
     }
@@ -38,13 +46,18 @@ public abstract class GangAbstractBeanFactory implements GangConfigurableBeanFac
     }
 
     /**
-     * @param bd class of bean is {@link gang.org.springframework.framework.beanfactorypostprocessor.GangConfigurationClassPostProcessor}
+     * @param bd is instance to class of {@link GangRootBeanDefinition}
      * */
     protected GangRootBeanDefinition getMergedBeanDefinition(String beanName, GangBeanDefinition bd, GangBeanDefinition containingBd){
-        GangRootBeanDefinition rootBeanDefinition = (GangRootBeanDefinition) ((GangRootBeanDefinition) bd).cloneBeanDefinition();
 
-        return null;
+        // GangBeanDefinition instance is GangRootBeanDefinition as
+        GangRootBeanDefinition rootBeanDefinition = ((GangRootBeanDefinition) bd).cloneBeanDefinition();
+
+        rootBeanDefinition.setScope(SCOPE_SINGLETON);
+        return rootBeanDefinition;
     }
 
     protected abstract GangBeanDefinition getBeanDefinition(String beanName);
+
+
 }

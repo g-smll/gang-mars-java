@@ -12,7 +12,7 @@ public class GangRootBeanDefinition extends GangAbstractBeanDefinition {
     }
 
     @Override
-    public GangAbstractBeanDefinition cloneBeanDefinition() {
+    public GangRootBeanDefinition cloneBeanDefinition() {
         return new GangRootBeanDefinition(this);
     }
 
@@ -20,4 +20,6 @@ public class GangRootBeanDefinition extends GangAbstractBeanDefinition {
         //TODO
         super(original);
     }
+
+
 }

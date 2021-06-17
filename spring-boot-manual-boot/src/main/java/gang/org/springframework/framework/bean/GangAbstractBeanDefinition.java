@@ -20,8 +20,12 @@ public abstract class GangAbstractBeanDefinition extends GangBeanMetadataAttribu
 
     public abstract GangAbstractBeanDefinition cloneBeanDefinition();
 
+    /**
+     * @param original is instance of {@link GangRootBeanDefinition}
+     * */
     protected GangAbstractBeanDefinition (GangBeanDefinition original){
-        this.beanClass = original.getClass();
+        GangAbstractBeanDefinition abstractBeanDefinition = (GangAbstractBeanDefinition) original;
+        setBeanClass(abstractBeanDefinition.getBeanClass());
     }
 
     @Override
@@ -46,5 +50,10 @@ public abstract class GangAbstractBeanDefinition extends GangBeanMetadataAttribu
 
     public Object getBeanClass() {
         return this.beanClass;
+    }
+
+    @Override
+    public boolean isSingleton() {
+        return SCOPE_SINGLETON.equals(scope);
     }
 }

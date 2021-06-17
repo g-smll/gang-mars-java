@@ -20,7 +20,7 @@ public class GangAnnotatedBeanDefinitionReader {
 
     /**
      * @param registry 入参上下文对象
-     * @param environment 暂时不编码实现（变理）
+     * @param environment 暂时不编码实现
      * */
     public GangAnnotatedBeanDefinitionReader(GangBeanDefinitionRegistry registry, Object environment){
         this.registry = registry;

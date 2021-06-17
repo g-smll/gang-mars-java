@@ -10,4 +10,14 @@ public class GangRootBeanDefinition extends GangAbstractBeanDefinition {
     public GangRootBeanDefinition(Class beanClass){
         setBeanClass(beanClass);
     }
+
+    @Override
+    public GangAbstractBeanDefinition cloneBeanDefinition() {
+        return new GangRootBeanDefinition(this);
+    }
+
+    public GangRootBeanDefinition(GangRootBeanDefinition original){
+        //TODO
+        super(original);
+    }
 }

@@ -40,4 +40,9 @@ public class GangDefaultListableBeanFactory extends GangAbstractAutowireCapableB
         }
         return result.stream().toArray(String[]::new);
     }
+
+    @Override
+    protected GangBeanDefinition getBeanDefinition(String beanName) {
+        return this.beanDefinitionMap.get(beanName);
+    }
 }

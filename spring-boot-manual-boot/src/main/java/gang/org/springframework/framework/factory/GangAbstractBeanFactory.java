@@ -29,7 +29,7 @@ public abstract class GangAbstractBeanFactory extends GangFactoryBeanRegistrySup
         if (mbd.isSingleton()) {
             //TODO
             Object sharedInstance = getSingleton(beanName, () -> {
-                return null;
+                return createBean(beanName,mbd,args);
             });
         }
 
@@ -58,6 +58,8 @@ public abstract class GangAbstractBeanFactory extends GangFactoryBeanRegistrySup
     }
 
     protected abstract GangBeanDefinition getBeanDefinition(String beanName);
+
+    protected abstract Object createBean(String beanName, GangRootBeanDefinition mbd, Object[] args);
 
 
 }

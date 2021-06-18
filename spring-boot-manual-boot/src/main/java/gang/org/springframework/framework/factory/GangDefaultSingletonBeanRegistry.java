@@ -8,6 +8,9 @@ package gang.org.springframework.framework.factory;
 public class GangDefaultSingletonBeanRegistry implements GangSingletonBeanRegistry{
 
     public Object getSingleton(String beanName, GangObjectFactory<?> singletonFactory){
-        return null;
+
+        Object singletonObject = singletonFactory.getObject();
+
+        return singletonObject;
     }
 }

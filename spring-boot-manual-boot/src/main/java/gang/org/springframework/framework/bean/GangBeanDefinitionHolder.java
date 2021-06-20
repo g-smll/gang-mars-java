@@ -14,4 +14,8 @@ public class GangBeanDefinitionHolder {
         this.beanName = beanName;
         this.aliases = aliases;
     }
+
+    public GangBeanDefinition getBeanDefinition() {
+        return this.beanDefinition;
+    }
 }

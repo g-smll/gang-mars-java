@@ -1,7 +1,10 @@
 package gang.org.springframework.boot;
 
+import gang.org.springframework.boot.loader.GangBeanDefinitionLoader;
+import gang.org.springframework.framework.context.GangApplicationContext;
 import gang.org.springframework.framework.context.GangConfigurableApplicationContext;
 import gang.org.springframework.framework.GangResourceLoader;
+import gang.org.springframework.framework.support.GangBeanDefinitionRegistry;
 
 import java.util.*;
 
@@ -32,9 +35,9 @@ public class GangSpringApplication {
         this(null,primarySource);
     }
 
+    //TODO
     public GangSpringApplication(GangResourceLoader resourceLoader, Class<?>... primarySource){
-
-        //setInitializers(null);
+        this.primarySource = new LinkedHashSet<>(Arrays.asList(primarySource));
     }
 
 
@@ -60,6 +63,8 @@ public class GangSpringApplication {
             GangApplicationArguments applicationArguments = new GangDefaultApplicationArguments(args);
 
             context = createApplicationContext();
+
+            prepareContext(null,context,null,null,null,null);
 
             //#############################################################
             //refreshContext
@@ -105,4 +110,47 @@ public class GangSpringApplication {
         this.initializers = new ArrayList(initializers);
     }
 
+
+    //TODO
+    /**
+     * @param context {@link gang.org.springframework.boot.context.GangAnnotationConfigServletWebServerApplicationContext}
+     * */
+    private void prepareContext(Object bootstrapContext,
+                                GangConfigurableApplicationContext context,
+                                Object environment,
+                                Object listeners,
+                                Object applicationArguments,
+                                Object printedBanner)
+    {
+
+        Set<Object> sources = getAllSources();
+        load(context,sources.toArray(new Object[0]));
+    }
+
+    public Set<Object> getAllSources(){
+        Set<Object> allSource = new LinkedHashSet<>();
+        allSource.addAll(this.primarySource);
+        return allSource;
+    }
+
+    //TODO
+    private GangBeanDefinitionRegistry getBeanDefinitionRegistry(GangApplicationContext context){
+        return (GangBeanDefinitionRegistry) context;
+    }
+
+    //TODO
+    /**
+     * @param sources {@link com.gang.mars.boot.SpringbootManualApplication}
+     * @param context {@link gang.org.springframework.boot.context.GangAnnotationConfigServletWebServerApplicationContext}
+     * */
+    protected void load(GangApplicationContext context, Object[] sources)
+    {
+        GangBeanDefinitionLoader loader = createBeanDefinitionLoader(getBeanDefinitionRegistry(context),sources);
+        loader.load();
+
+    }
+
+    protected GangBeanDefinitionLoader createBeanDefinitionLoader(GangBeanDefinitionRegistry registry, Object[] sources){
+        return new GangBeanDefinitionLoader(registry,sources);
+    }
 }

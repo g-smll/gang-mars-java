@@ -18,4 +18,8 @@ public class GangBeanDefinitionHolder {
     public GangBeanDefinition getBeanDefinition() {
         return this.beanDefinition;
     }
+
+    public String getBeanName() {
+        return this.beanName;
+    }
 }

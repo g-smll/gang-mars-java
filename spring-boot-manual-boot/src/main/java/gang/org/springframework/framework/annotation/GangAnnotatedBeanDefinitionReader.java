@@ -1,7 +1,9 @@
 package gang.org.springframework.framework.annotation;
 
 import gang.org.springframework.framework.bean.GangAnnotatedGenericBeanDefinition;
+import gang.org.springframework.framework.bean.GangBeanDefinitionHolder;
 import gang.org.springframework.framework.support.GangAnnotationBeanNameGenerator;
+import gang.org.springframework.framework.support.GangBeanDefinitionReaderUtils;
 import gang.org.springframework.framework.support.GangBeanDefinitionRegistry;
 import gang.org.springframework.framework.support.GangBeanNameGenerator;
 
@@ -53,5 +55,10 @@ public class GangAnnotatedBeanDefinitionReader {
         GangAnnotatedGenericBeanDefinition abd = new GangAnnotatedGenericBeanDefinition(beanClass);
 
         String beanName = beanNameGenerator.generateBeanName(abd, this.registry);
+
+        GangBeanDefinitionHolder definitionHolder = new GangBeanDefinitionHolder(abd,beanName);
+
+        GangBeanDefinitionReaderUtils.registerBeanDefinition(definitionHolder,this.registry);
+
     }
 }

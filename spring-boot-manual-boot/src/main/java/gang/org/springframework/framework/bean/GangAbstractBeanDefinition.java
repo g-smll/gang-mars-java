@@ -61,6 +61,6 @@ public abstract class GangAbstractBeanDefinition extends GangBeanMetadataAttribu
     @Override
     public String getBeanClassName() {
         Object beanClassObject = this.beanClass;
-        return ((Class<?>)beanClassObject).getClass().getName();
+        return ((Class<?>)beanClassObject).getName();
     }
 }

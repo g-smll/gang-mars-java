@@ -1,6 +1,10 @@
 package gang.org.springframework.framework.support;
 
 import gang.org.springframework.framework.bean.GangBeanDefinition;
+import gang.org.springframework.framework.bean.GangBeanUtils;
+import gang.org.springframework.framework.util.GangClassUtil;
+
+import java.beans.Introspector;
 
 /**
  * @author gang.chen
@@ -14,12 +18,18 @@ public class GangAnnotationBeanNameGenerator implements GangBeanNameGenerator
     @Override
     public String generateBeanName(GangBeanDefinition definition, GangBeanDefinitionRegistry registry)
     {
-        return null;
+        return buildDefaultBeanName(definition,registry);
     }
 
-    protected String buildDefaultBeanName(GangBeanDefinition definition)
+    protected String buildDefaultBeanName(GangBeanDefinition definition,GangBeanDefinitionRegistry registry)
     {
-        String beanName = definition.getBeanClassName();
-        return null;
+        return buildDefaultBeanName(definition);
+    }
+
+    //TODO
+    protected String buildDefaultBeanName(GangBeanDefinition definition){
+        String beanClassName = definition.getBeanClassName();
+        String shortClassName = GangClassUtil.getShortName(beanClassName);
+        return Introspector.decapitalize(shortClassName);
     }
 }

@@ -73,6 +73,7 @@ public abstract class GangAbstractApplicationContext implements GangConfigurable
     /**
      * @param beanFactory {@link gang.org.springframework.framework.factory.GangDefaultListableBeanFactory}
      * */
+    //TODO
     protected void invokeBeanFactoryPostProcessor(GangConfigurableListableBeanFactory beanFactory){
         GangPostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(beanFactory,getBeanFactoryPostProcessors());
     }
@@ -111,6 +112,17 @@ public abstract class GangAbstractApplicationContext implements GangConfigurable
     }
 
     public List<GangBeanFactoryPostProcessor> getBeanFactoryPostProcessors(){
+        return null;
+    }
+
+    //TODO
+    @Override
+    public <T> T getBean(String name, Class<T> requiredType) {
+        return null;
+    }
+
+    //TODO
+    public String[] getBeanDefinitionNames() {
         return null;
     }
 }

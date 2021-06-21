@@ -35,6 +35,7 @@ public class GangConfigurationClassPostProcessor implements GangBeanDefinitionRe
         List<GangBeanDefinitionHolder> configCandidates = new ArrayList<>();
 
         //TODO get value from registry; registry.getBeanDefinitionNames()
+        System.out.println(registry.getBeanDefinitionNames());
         String candidateNames[] = (String[]) Arrays.asList("SpringbootManualApplication").toArray();
 
         for (String beanName : candidateNames) {

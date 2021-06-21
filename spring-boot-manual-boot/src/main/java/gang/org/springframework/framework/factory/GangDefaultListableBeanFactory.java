@@ -28,6 +28,12 @@ public class GangDefaultListableBeanFactory extends GangAbstractAutowireCapableB
         this.beanDefinitionMap.put(beanName,beanDefinition);
     }
 
+    //TODO
+    @Override
+    public String[] getBeanDefinitionNames() {
+        return beanDefinitionNames.stream().toArray(String[]::new);
+    }
+
     @Override
     public String[] getBeanNamesForType(Class type, boolean includeNonSingletons, boolean allowEagerInit) {
         return doGetBeanNamesForType(GangResolvableType.forRawClass(type),includeNonSingletons,true);

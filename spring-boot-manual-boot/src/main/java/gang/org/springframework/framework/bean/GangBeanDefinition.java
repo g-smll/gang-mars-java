@@ -13,4 +13,6 @@ public interface GangBeanDefinition {
     boolean isSingleton();
 
     String SCOPE_SINGLETON = GangConfigurableBeanFactory.SCOPE_SINGLETON;
+
+    String getBeanClassName();
 }

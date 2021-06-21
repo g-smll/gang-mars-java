@@ -56,4 +56,11 @@ public abstract class GangAbstractBeanDefinition extends GangBeanMetadataAttribu
     public boolean isSingleton() {
         return SCOPE_SINGLETON.equals(scope);
     }
+
+    //TODO
+    @Override
+    public String getBeanClassName() {
+        Object beanClassObject = this.beanClass;
+        return ((Class<?>)beanClassObject).getClass().getName();
+    }
 }

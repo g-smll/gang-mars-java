@@ -1,7 +1,9 @@
 package gang.org.springframework.framework.annotation;
 
 import gang.org.springframework.framework.bean.GangAnnotatedGenericBeanDefinition;
+import gang.org.springframework.framework.support.GangAnnotationBeanNameGenerator;
 import gang.org.springframework.framework.support.GangBeanDefinitionRegistry;
+import gang.org.springframework.framework.support.GangBeanNameGenerator;
 
 /**
  * @author gang.chen
@@ -11,6 +13,8 @@ import gang.org.springframework.framework.support.GangBeanDefinitionRegistry;
 public class GangAnnotatedBeanDefinitionReader {
 
     private final GangBeanDefinitionRegistry registry;
+
+    private GangBeanNameGenerator beanNameGenerator = GangAnnotationBeanNameGenerator.INSTANCE;
 
     /**
      * @param registry {@link gang.org.springframework.boot.context.GangAnnotationConfigServletWebServerApplicationContext}
@@ -48,5 +52,6 @@ public class GangAnnotatedBeanDefinitionReader {
     {
         GangAnnotatedGenericBeanDefinition abd = new GangAnnotatedGenericBeanDefinition(beanClass);
 
+        String beanName = beanNameGenerator.generateBeanName(abd, this.registry);
     }
 }

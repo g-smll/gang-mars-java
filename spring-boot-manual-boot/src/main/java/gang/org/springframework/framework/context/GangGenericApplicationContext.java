@@ -23,8 +23,10 @@ public class GangGenericApplicationContext extends GangAbstractApplicationContex
         beanFactory.registerBeanDefinition(beanName,beanDefinition);
     }
 
-
-
+    @Override
+    public boolean containsBeanDefinition(String beanName) {
+        return false;
+    }
 
 
     @Override

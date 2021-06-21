@@ -48,7 +48,13 @@ public class GangDefaultListableBeanFactory extends GangAbstractAutowireCapableB
     }
 
     @Override
-    protected GangBeanDefinition getBeanDefinition(String beanName) {
+    protected GangBeanDefinition getBeanDefinition(String beanName)
+    {
         return this.beanDefinitionMap.get(beanName);
+    }
+
+    @Override
+    public boolean containsBeanDefinition(String beanName) {
+        return this.beanDefinitionMap.containsKey(beanName);
     }
 }

@@ -7,4 +7,6 @@ public interface GangBeanDefinitionRegistry extends GangAliasRegistry {
     void registerBeanDefinition(String beanName, GangBeanDefinition beanDefinition);
 
     String[] getBeanDefinitionNames();
+
+    boolean containsBeanDefinition(String beanName);
 }

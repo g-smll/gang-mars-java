@@ -4,7 +4,6 @@ import gang.org.springframework.framework.bean.GangBeanDefinition;
 import gang.org.springframework.framework.bean.GangBeanDefinitionHolder;
 import gang.org.springframework.framework.bean.GangRootBeanDefinition;
 import gang.org.springframework.framework.beanfactorypostprocessor.GangConfigurationClassPostProcessor;
-import gang.org.springframework.framework.context.GangGenericApplicationContext;
 import gang.org.springframework.framework.factory.GangDefaultListableBeanFactory;
 import gang.org.springframework.framework.support.GangBeanDefinitionRegistry;
 
@@ -24,11 +23,19 @@ public abstract class GangAnnotationConfigUtils {
         registerAnnotationConfigProcessors(registry,null);
     }
 
+
+    /**
+     * @param registry {@link GangDefaultListableBeanFactory}
+     * */
+    //TODO
     public static Set<GangBeanDefinitionHolder> registerAnnotationConfigProcessors(GangBeanDefinitionRegistry registry,Object source){
         Set<GangBeanDefinitionHolder> beanDefs = new LinkedHashSet<>(8);
-        GangRootBeanDefinition def = new GangRootBeanDefinition(GangConfigurationClassPostProcessor.class);
-        def.setSource(source);
-        beanDefs.add(registerPosProcessor(registry,def,CONFIGURATION_ANNOTATION_PROCESSOR_NAME));
+        if (!registry.containsBeanDefinition(CONFIGURATION_ANNOTATION_PROCESSOR_NAME)) {
+            GangRootBeanDefinition def = new GangRootBeanDefinition(GangConfigurationClassPostProcessor.class);
+            def.setSource(source);
+            beanDefs.add(registerPosProcessor(registry,def,CONFIGURATION_ANNOTATION_PROCESSOR_NAME));
+        }
+
         return beanDefs;
     }
 

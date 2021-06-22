@@ -54,9 +54,8 @@ public class GangConfigurationClassPostProcessor implements GangBeanDefinitionRe
         Set<GangBeanDefinitionHolder> candidates = new LinkedHashSet<>(configCandidates);
 
         //TODO
-        do{
+        do {
             parser.parse(candidates);
-
 
             candidates.clear();
         }

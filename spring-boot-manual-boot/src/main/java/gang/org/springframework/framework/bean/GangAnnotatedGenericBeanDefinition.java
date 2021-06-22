@@ -1,5 +1,7 @@
 package gang.org.springframework.framework.bean;
 
+import gang.org.springframework.framework.metadata.GangAnnotationMetadata;
+
 /**
  * @author gang.chen
  * @description
@@ -7,7 +9,10 @@ package gang.org.springframework.framework.bean;
  */
 public class GangAnnotatedGenericBeanDefinition extends GangGenericBeanDefinition implements GangAnnotatedBeanDefinition{
 
+    private final GangAnnotationMetadata metadata;
+
     public GangAnnotatedGenericBeanDefinition(Class beanClass){
         setBeanClass(beanClass);
+        this.metadata = GangAnnotationMetadata.introspect(beanClass);
     }
 }

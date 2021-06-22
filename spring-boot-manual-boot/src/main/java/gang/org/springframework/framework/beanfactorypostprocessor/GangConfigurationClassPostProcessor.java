@@ -1,12 +1,16 @@
 package gang.org.springframework.framework.beanfactorypostprocessor;
 
-import com.gang.mars.boot.SpringbootManualApplication;
 import gang.org.springframework.framework.annotation.GangConfigurationClassParser;
-import gang.org.springframework.framework.bean.*;
+import gang.org.springframework.framework.annotation.GangConfigurationClassUtils;
+import gang.org.springframework.framework.bean.GangBeanDefinition;
+import gang.org.springframework.framework.bean.GangBeanDefinitionHolder;
 import gang.org.springframework.framework.factory.GangConfigurableListableBeanFactory;
 import gang.org.springframework.framework.support.GangBeanDefinitionRegistry;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author gang.chen
@@ -34,16 +38,14 @@ public class GangConfigurationClassPostProcessor implements GangBeanDefinitionRe
     {
         List<GangBeanDefinitionHolder> configCandidates = new ArrayList<>();
 
-        //TODO get value from registry; registry.getBeanDefinitionNames()
-        System.out.println(registry.getBeanDefinitionNames());
-        String candidateNames[] = (String[]) Arrays.asList("SpringbootManualApplication").toArray();
-
+        String[] candidateNames = registry.getBeanDefinitionNames();
         for (String beanName : candidateNames) {
 
-            //TODO get BeanDefinition from registry
-            GangAnnotatedGenericBeanDefinition beanDef = new GangAnnotatedGenericBeanDefinition(SpringbootManualApplication.class);
+            GangBeanDefinition beanDef = registry.getBeanDefinition(beanName);
 
-            configCandidates.add(new GangBeanDefinitionHolder(beanDef,beanName));
+            if (GangConfigurationClassUtils.checkConfigurationClassCandidate(beanDef,null)) {
+                configCandidates.add(new GangBeanDefinitionHolder(beanDef,beanName));
+            }
         }
 
         //TODO

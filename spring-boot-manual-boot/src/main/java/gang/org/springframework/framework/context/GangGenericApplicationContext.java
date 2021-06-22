@@ -28,6 +28,11 @@ public class GangGenericApplicationContext extends GangAbstractApplicationContex
         return false;
     }
 
+    @Override
+    public GangBeanDefinition getBeanDefinition(String beanName) {
+        return null;
+    }
+
 
     @Override
     public GangConfigurableListableBeanFactory getBeanFactory()

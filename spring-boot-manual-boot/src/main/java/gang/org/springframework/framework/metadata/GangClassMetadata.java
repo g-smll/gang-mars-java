@@ -1,4 +1,6 @@
 package gang.org.springframework.framework.metadata;
 
-public interface GangClassMetadata {
+public interface GangClassMetadata
+{
+    String getClassName();
 }

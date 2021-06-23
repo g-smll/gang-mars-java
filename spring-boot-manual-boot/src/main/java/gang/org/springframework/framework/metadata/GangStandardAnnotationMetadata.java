@@ -21,4 +21,6 @@ public class GangStandardAnnotationMetadata extends GangStandardClassMetadata im
     {
         return new GangStandardAnnotationMetadata(introspectedClass,true);
     }
+
+
 }

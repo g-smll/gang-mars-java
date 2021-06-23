@@ -1,5 +1,6 @@
 package gang.org.springframework.framework.annotation;
 
+import gang.org.springframework.boot.autoconfigure.GImport;
 import gang.org.springframework.boot.autoconfigure.GangDeferredImportSelector;
 import gang.org.springframework.framework.bean.GangAnnotatedBeanDefinition;
 import gang.org.springframework.framework.bean.GangBeanDefinition;
@@ -8,6 +9,7 @@ import gang.org.springframework.framework.metadata.GangAnnotationMetadata;
 import gang.org.springframework.framework.metadata.GangStandardAnnotationMetadata;
 import gang.org.springframework.framework.support.GangBeanDefinitionRegistry;
 
+import java.lang.annotation.Annotation;
 import java.util.*;
 
 /**
@@ -58,9 +60,10 @@ public class GangConfigurationClassParser {
     }
 
     //TODO
-    protected final Object doProcessConfigurationClass(GangConfigurationClass configClass, GangSourceClass sourceClass, Object filter){
+    protected final Object doProcessConfigurationClass(GangConfigurationClass configClass, GangSourceClass sourceClass, Object filter)
+    {
         //Process any @Import annotations
-        processImports(null,null,null,null,true);
+        processImports(configClass,sourceClass,getImports(sourceClass),null,true);
         return null;
     }
 
@@ -133,6 +136,32 @@ public class GangConfigurationClassParser {
             this.source = source;
             this.metadata = GangAnnotationMetadata.introspect((Class<?>)source);
         }
+
+        //TODO
+        public Set<GangSourceClass> getAnnotations()
+        {
+            Set<GangSourceClass> result = new LinkedHashSet<>();
+            if (this.source instanceof Class) {
+                Class<?> sourceClass = (Class<?>) this.source;
+                for (Annotation ann : sourceClass.getDeclaredAnnotations())
+                {
+                    Class<? extends Annotation> anyType = ann.annotationType();
+                    String name = anyType.getName();
+                    //#######################################################
+                    //JDK原生注解过滤，比如 java.lang.annotation.Target
+                    //#######################################################
+                    if (!name.startsWith("java"))
+                    {
+                        result.add(asSourceClass(anyType,null));
+                    }
+                }
+            }
+            return result;
+        }
+
+        public GangAnnotationMetadata getMetadata() {
+            return this.metadata;
+        }
     }
 
     //TODO
@@ -149,6 +178,30 @@ public class GangConfigurationClassParser {
     GangSourceClass asSourceClass(Class<?> classType, Object filter)
     {
         return new GangSourceClass(classType);
+    }
+
+    private Set<GangSourceClass> getImports(GangSourceClass sourceClass)
+    {
+        Set<GangSourceClass> imports = new LinkedHashSet<>();
+        Set<GangSourceClass> visited = new LinkedHashSet<>();
+        collectImports(sourceClass,imports,visited);
+        return imports;
+    }
+
+    //TODO
+    private void collectImports(GangSourceClass sourceClass,Set<GangSourceClass> imports, Set<GangSourceClass> visited)
+    {
+        if (visited.add(sourceClass))
+        {
+            Set<GangSourceClass> gangSourceClasses = sourceClass.getAnnotations();
+            for (GangSourceClass annotation : gangSourceClasses)
+            {
+                String annName = annotation.getMetadata().getClassName();
+                if (!annName.equals(GImport.class.getName())) {
+                    collectImports(annotation,imports,visited);
+                }
+            }
+        }
     }
 
 

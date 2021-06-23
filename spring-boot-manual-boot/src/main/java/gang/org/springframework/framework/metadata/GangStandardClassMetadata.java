@@ -16,4 +16,9 @@ public class GangStandardClassMetadata implements GangClassMetadata
     public final Class<?> getIntrospectedClass() {
         return this.introspectedClass;
     }
+
+    @Override
+    public String getClassName() {
+        return this.introspectedClass.getName();
+    }
 }

@@ -1,4 +1,8 @@
 package gang.org.springframework.framework.bean;
 
-public interface GangAnnotatedBeanDefinition extends GangBeanDefinition {
+import gang.org.springframework.framework.metadata.GangAnnotationMetadata;
+
+public interface GangAnnotatedBeanDefinition extends GangBeanDefinition
+{
+    GangAnnotationMetadata getMetadata();
 }

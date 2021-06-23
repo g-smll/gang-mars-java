@@ -11,8 +11,15 @@ public class GangAnnotatedGenericBeanDefinition extends GangGenericBeanDefinitio
 
     private final GangAnnotationMetadata metadata;
 
-    public GangAnnotatedGenericBeanDefinition(Class beanClass){
+    public GangAnnotatedGenericBeanDefinition(Class beanClass)
+    {
         setBeanClass(beanClass);
         this.metadata = GangAnnotationMetadata.introspect(beanClass);
+    }
+
+    @Override
+    public final GangAnnotationMetadata getMetadata()
+    {
+        return this.metadata;
     }
 }

@@ -24,8 +24,12 @@ public class GangDefaultListableBeanFactory extends GangAbstractAutowireCapableB
 
     @Override
     public void registerBeanDefinition(String beanName, GangBeanDefinition beanDefinition) {
-        this.beanDefinitionNames.add(beanName);
-        this.beanDefinitionMap.put(beanName,beanDefinition);
+        GangBeanDefinition existingDefinition = this.beanDefinitionMap.get(beanName);
+        if(null == existingDefinition)
+        {
+            this.beanDefinitionNames.add(beanName);
+            this.beanDefinitionMap.put(beanName,beanDefinition);
+        }
     }
 
     //TODO

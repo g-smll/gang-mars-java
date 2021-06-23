@@ -36,8 +36,9 @@ public class GangConfigurationClassParser {
 
             GangBeanDefinition bd = holder.getBeanDefinition();
 
-            if (bd instanceof GangAnnotatedBeanDefinition) {
-                parse(null,null);
+            if (bd instanceof GangAnnotatedBeanDefinition)
+            {
+                parse(((GangAnnotatedBeanDefinition)bd).getMetadata(),holder.getBeanName());
             }
         }
     }

@@ -12,11 +12,12 @@ public class GangStandardAnnotationMetadata extends GangStandardClassMetadata im
 
     public GangStandardAnnotationMetadata(Class<?> introspectedClass, boolean nestedAnnotationsAsMap)
     {
+        super(introspectedClass);
         this.mergedAnnotations = null;
         this.nestedAnnotationsAsMap= nestedAnnotationsAsMap;
     }
 
-    static GangAnnotationMetadata from(Class<?> introspectedClass)
+    public static GangAnnotationMetadata from(Class<?> introspectedClass)
     {
         return new GangStandardAnnotationMetadata(introspectedClass,true);
     }

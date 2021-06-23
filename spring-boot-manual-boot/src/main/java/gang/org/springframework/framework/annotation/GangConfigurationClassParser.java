@@ -5,6 +5,7 @@ import gang.org.springframework.framework.bean.GangAnnotatedBeanDefinition;
 import gang.org.springframework.framework.bean.GangBeanDefinition;
 import gang.org.springframework.framework.bean.GangBeanDefinitionHolder;
 import gang.org.springframework.framework.metadata.GangAnnotationMetadata;
+import gang.org.springframework.framework.metadata.GangStandardAnnotationMetadata;
 import gang.org.springframework.framework.support.GangBeanDefinitionRegistry;
 
 import java.util.*;
@@ -43,16 +44,20 @@ public class GangConfigurationClassParser {
         }
     }
 
+    //TODO
     protected final void parse(GangAnnotationMetadata metadata, String beanName)
     {
-        processConfigurationClass(null,null);
+        processConfigurationClass(new GangConfigurationClass(beanName,metadata),null);
     }
 
-    protected void processConfigurationClass(Object configClass, Object filter){
-        doProcessConfigurationClass(null,null,null);
+    //TODO
+    protected void processConfigurationClass(GangConfigurationClass configClass, Object filter)
+    {
+        GangSourceClass sourceClass = asSourceClass(configClass, null);
+        doProcessConfigurationClass(configClass,sourceClass,null);
     }
 
-    protected final Object doProcessConfigurationClass(Object configClass, Object sourceClass, Object filter){
+    protected final Object doProcessConfigurationClass(GangConfigurationClass configClass, GangSourceClass sourceClass, Object filter){
         //Process any @Import annotations
         processImports(null,null,null,null,true);
         return null;
@@ -114,6 +119,34 @@ public class GangConfigurationClassParser {
             }
             return null;
         }
+    }
+
+    //TODO
+    private class GangSourceClass
+    {
+        private final Object source;
+        private final GangAnnotationMetadata metadata;
+
+        public GangSourceClass(Object source) {
+            this.source = source;
+            this.metadata = GangAnnotationMetadata.introspect((Class<?>)source);
+        }
+    }
+
+    //TODO
+    private GangSourceClass asSourceClass(GangConfigurationClass configurationClass, Object filter)
+    {
+        GangAnnotationMetadata metadata = configurationClass.getMetadata();
+        if (metadata instanceof GangStandardAnnotationMetadata) {
+            return asSourceClass(((GangStandardAnnotationMetadata)metadata).getIntrospectedClass(),null);
+        }
+        return null;
+    }
+
+    //TODO
+    GangSourceClass asSourceClass(Class<?> classType, Object filter)
+    {
+        return new GangSourceClass(classType);
     }
 
 

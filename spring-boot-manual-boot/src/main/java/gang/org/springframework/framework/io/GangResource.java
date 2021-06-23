@@ -1,5 +1,5 @@
 package gang.org.springframework.framework.io;
 
-public interface GangResource {
-    //
+public interface GangResource extends GangInputStreamSource
+{
 }

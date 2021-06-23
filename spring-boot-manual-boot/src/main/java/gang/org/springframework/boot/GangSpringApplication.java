@@ -64,6 +64,10 @@ public class GangSpringApplication {
 
             context = createApplicationContext();
 
+            //#############################################################
+            //prepareContext
+            //把启动类加载到 BeanDefinition
+            //#############################################################
             prepareContext(null,context,null,null,null,null);
 
             //#############################################################

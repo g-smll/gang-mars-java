@@ -57,13 +57,15 @@ public class GangConfigurationClassParser {
         doProcessConfigurationClass(configClass,sourceClass,null);
     }
 
+    //TODO
     protected final Object doProcessConfigurationClass(GangConfigurationClass configClass, GangSourceClass sourceClass, Object filter){
         //Process any @Import annotations
         processImports(null,null,null,null,true);
         return null;
     }
 
-    private void processImports(Object configClass, Object currentSourceClass, Object importCandidates, Object exclusionClass, boolean checkForCircularImports)
+    //TODO
+    private void processImports(GangConfigurationClass configClass, GangSourceClass currentSourceClass, Collection<GangSourceClass> importCandidates, Object exclusionClass, boolean checkForCircularImports)
     {
         this.deferredImportSelectorHandler.handle(null,null);
 

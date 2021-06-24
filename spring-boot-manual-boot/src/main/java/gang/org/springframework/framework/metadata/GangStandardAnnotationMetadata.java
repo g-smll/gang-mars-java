@@ -1,5 +1,7 @@
 package gang.org.springframework.framework.metadata;
 
+import java.util.Map;
+
 /**
  * @author gang.chen
  * @description
@@ -22,5 +24,12 @@ public class GangStandardAnnotationMetadata extends GangStandardClassMetadata im
         return new GangStandardAnnotationMetadata(introspectedClass,true);
     }
 
+    @Override
+    public Map<String, Object> getAnnotationAttribute(String annotationName, boolean classValuesAsString) {
+        if (this.nestedAnnotationsAsMap)
+        {
 
+        }
+        return null;
+    }
 }

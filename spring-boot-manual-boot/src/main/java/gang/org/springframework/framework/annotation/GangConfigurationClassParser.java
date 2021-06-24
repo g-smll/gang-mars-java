@@ -149,6 +149,7 @@ public class GangConfigurationClassParser {
                     String name = anyType.getName();
                     //#######################################################
                     //JDK原生注解过滤，比如 java.lang.annotation.Target
+                    //其余spring定义的注解，解析生成GangSourceClass
                     //#######################################################
                     if (!name.startsWith("java"))
                     {
@@ -161,6 +162,12 @@ public class GangConfigurationClassParser {
 
         public GangAnnotationMetadata getMetadata() {
             return this.metadata;
+        }
+
+        public Collection<GangSourceClass> getAnnotationAttributes(String annType, String attribute)
+        {
+            Set<GangSourceClass> result = new LinkedHashSet<>();
+            return result;
         }
     }
 
@@ -205,7 +212,7 @@ public class GangConfigurationClassParser {
         //                               返回->Inherited(原生注解过滤)
         //                               返回->GImport
         //
-        //4> GImport                     返回->Target(原生注解过滤)
+        //4> GImport(跳出递归)             返回->Target(原生注解过滤)
         //                               返回->Retention(原生注解过滤)
         //-结束-
         //#############################################################
@@ -219,6 +226,15 @@ public class GangConfigurationClassParser {
                     collectImports(annotation,imports,visited);
                 }
             }
+
+            //#############################################################
+            //对象一 sourceClass ->GEnableAutoConfiguration
+            //对象二 GImport
+            //对象三 value
+            //最终返回------------GangAutoConfigurationImportSelector-------
+            //#############################################################
+            Collection<GangSourceClass> sourceClasses = sourceClass.getAnnotationAttributes(GImport.class.getName(), "value");
+            imports.addAll(sourceClasses);
         }
     }
 

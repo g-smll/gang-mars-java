@@ -191,6 +191,24 @@ public class GangConfigurationClassParser {
     //TODO
     private void collectImports(GangSourceClass sourceClass,Set<GangSourceClass> imports, Set<GangSourceClass> visited)
     {
+        //#############################################################
+        //递归获取注解
+        //1> SpringbootManualApplication 返回->GSpringBootApplication
+        //
+        //2> GSpringBootApplication      返回->Target(原生注解过滤)
+        //                               返回->Retention(原生注解过滤)
+        //                               返回->Inherited(原生注解过滤)
+        //                               返回->GEnableAutoConfiguration
+        //
+        //3> GEnableAutoConfiguration    返回->Target(原生注解过滤)
+        //                               返回->Retention(原生注解过滤)
+        //                               返回->Inherited(原生注解过滤)
+        //                               返回->GImport
+        //
+        //4> GImport                     返回->Target(原生注解过滤)
+        //                               返回->Retention(原生注解过滤)
+        //-结束-
+        //#############################################################
         if (visited.add(sourceClass))
         {
             Set<GangSourceClass> gangSourceClasses = sourceClass.getAnnotations();

@@ -8,7 +8,8 @@ import gang.org.springframework.boot.GangSpringApplication;
  * @time 2021/6/10 8:48
  */
 public class SpringbootManualApplication {
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         GangSpringApplication.run(SpringbootManualApplication.class,args);
     }
 }

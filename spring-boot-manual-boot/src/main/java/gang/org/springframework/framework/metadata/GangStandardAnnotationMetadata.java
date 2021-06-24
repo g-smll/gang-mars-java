@@ -15,6 +15,9 @@ public class GangStandardAnnotationMetadata extends GangStandardClassMetadata im
     public GangStandardAnnotationMetadata(Class<?> introspectedClass, boolean nestedAnnotationsAsMap)
     {
         super(introspectedClass);
+        //####################################################
+        //重点
+        //####################################################
         this.mergedAnnotations = null;
         this.nestedAnnotationsAsMap= nestedAnnotationsAsMap;
     }
